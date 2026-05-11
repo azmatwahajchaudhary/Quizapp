@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QuizMaster</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="container">
+
+  <!-- HOME SCREEN -->
+  <div class="screen active" id="screen-home">
+    <div class="card">
+      <div class="home-header">
+        <div class="logo">
+          <div class="logo-icon">⚡</div>
+          <span class="logo-text">QuizMaster</span>
+        </div>
+        <h1>Test your <span>knowledge</span><br>right now.</h1>
+        <p>Pick a topic, set your difficulty, and go.</p>
+      </div>
+
+      <div class="config-grid">
+        <div class="field">
+          <label>Category</label>
+          <select id="cat-select">
+            <option value="general">🌍 General Knowledge</option>
+            <option value="science">🔬 Science</option>
+            <option value="history">🏛️ History</option>
+            <option value="tech">💻 Technology</option>
+            <option value="sports">⚽ Sports</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Difficulty</label>
+          <select id="diff-select">
+            <option value="easy">🟢 Easy</option>
+            <option value="medium">🟡 Medium</option>
+            <option value="hard">🔴 Hard</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Questions — <span id="q-count-label">10</span></label>
+          <div class="range-row">
+            <input type="range" id="q-count" min="5" max="20" value="10" step="5"/>
+            <span class="range-val" id="q-count-val">10</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Timer per question (seconds)</label>
+          <div class="range-row">
+            <input type="range" id="q-timer" min="10" max="60" value="30" step="5"/>
+            <span class="range-val" id="q-timer-val">30</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="startQuiz()">Start Quiz →</button>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div class="screen" id="screen-quiz">
+    <div class="card">
+      <div class="quiz-meta">
+        <div class="q-counter">Q <span id="q-num">1</span> / <span id="q-total">10</span></div>
+        <div class="timer-pill" id="timer-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 3"/>
+          </svg>
+          <span id="timer-val">30</span>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="question-text" id="question-text"></div>
+      <div class="options" id="options-container"></div>
+      <div class="feedback-row">
+        <span class="feedback-msg" id="feedback-msg"></span>
+        <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next <span>→</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div class="screen" id="screen-results">
+    <div class="card">
+      <div class="results-header">
+        <div class="big-score" id="big-score">0%</div>
+        <div class="score-label">Final Score</div>
+        <div class="grade-badge" id="grade-badge"></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-val" id="stat-correct" style="color: var(--correct)">0</div>
+          <div class="stat-lbl">Correct</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-wrong" style="color: var(--wrong)">0</div>
+          <div class="stat-lbl">Wrong</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-time" style="color: var(--accent)">0s</div>
+          <div class="stat-lbl">Avg Time</div>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button class="btn btn-primary" onclick="reviewAnswers()">Review Answers</button>
+        <button class="btn btn-ghost" onclick="goHome()" style="width:100%">← Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEW SCREEN -->
+  <div class="screen" id="screen-review">
+    <div class="card">
+      <button class="back-btn" onclick="showScreen('screen-results')">← Back to results</button>
+      <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px;">Answer Review</div>
+      <div style="color:var(--muted);font-size:13px;">See what you got right and wrong</div>
+      <div class="review-list" id="review-list"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- JS files — questions must load before app -->
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
